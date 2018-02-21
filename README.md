@@ -1,5 +1,4 @@
-# merkle-tree
-Merkle Tree and Merkle proofs implementation in Kotlin
+### Merkle Tree and Merkle proofs implementation in Kotlin
 
 MerkleTree is implemented in Kotlin with `kotlin-platform-common` plugin which allows to compile the code to JavaScript.
 
