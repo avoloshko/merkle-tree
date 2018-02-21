@@ -1,0 +1,37 @@
+buildscript {
+    ext.kotlin_version = '1.2.21'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+group 'com.avoloshko'
+version '1.0-SNAPSHOT'
+
+def common = project.hasProperty("common") && project.findProperty("common").toString().toLowerCase().equals("true")
+
+if (common) {
+    apply plugin: 'kotlin-platform-common'
+} else {
+    apply plugin: 'kotlin'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    if (common) {
+        compile "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
+        testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version"
+        testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+    } else {
+        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+        testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    }
+}
