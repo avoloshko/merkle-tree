@@ -7,13 +7,13 @@ class SparseTreeTest {
                 depth = 4);
     }
 
-    @Test(expected = TreeSizeExceededException::class)
+    @Test(expected = IndexOutOfBoundsException::class)
     fun testInit1() {
         SparseMerkleTree(hashMapOf(-1 to "0".bytes(), 1 to "1".bytes(), 2 to "2".bytes()),
                 depth = 4);
     }
 
-    @Test(expected = TreeSizeExceededException::class)
+    @Test(expected = IndexOutOfBoundsException::class)
     fun testInit2() {
         SparseMerkleTree(hashMapOf(8 to "0".bytes(), 1 to "1".bytes(), 2 to "2".bytes()),
                 depth = 4);
@@ -29,7 +29,7 @@ class SparseTreeTest {
                 depth = 4);
     }
 
-    @Test(expected = TreeSizeExceededException::class)
+    @Test(expected = IndexOutOfBoundsException::class)
     fun testInit4() {
         SparseMerkleTree(hashMapOf(0 to "0".bytes(),
                 1 to "1".bytes(),

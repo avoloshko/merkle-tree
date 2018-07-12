@@ -1,7 +1,5 @@
 import kotlin.math.pow
 
-class TreeSizeExceededException : Exception("There are too many leaves for the tree to build")
-
 class SparseMerkleTree(input: Map<Int, ByteArray>,
                        val depth: Int = 256,
                        val hash: (ByteArray) -> ByteArray = { data -> SHA256Digest.digest(data) }) {
@@ -14,11 +12,11 @@ class SparseMerkleTree(input: Map<Int, ByteArray>,
         // validate data
         val max = 2.0.pow(depth - 1).toInt()
         if (input.size > max) {
-            throw TreeSizeExceededException()
+            throw IndexOutOfBoundsException("There are too many leaves for the tree to build")
         }
         for (idx in input.keys) {
             if (idx < 0 || idx >= max) {
-                throw TreeSizeExceededException()
+                throw IndexOutOfBoundsException()
             }
         }
 
