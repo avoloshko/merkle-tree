@@ -66,8 +66,8 @@ class SparseMerkleTree(input: Map<Int, ByteArray>,
         return tree.toTypedArray()
     }
 
-    fun createMerkleProof(uid: Int): Array<ByteArray> {
-        var index = uid
+    fun proofForIndex(idx: Int): List<ByteArray> {
+        var index = idx
         val proof = mutableListOf<ByteArray>()
 
         for (level in 0 until (depth - 1)) {
@@ -79,7 +79,7 @@ class SparseMerkleTree(input: Map<Int, ByteArray>,
                 proof += defaultNodes[level]
             }
         }
-        return proof.toTypedArray()
+        return proof
     }
 
     fun verifyProof(proof: List<ByteArray>, root: ByteArray, leaf: ByteArray, idx: Int): Boolean {

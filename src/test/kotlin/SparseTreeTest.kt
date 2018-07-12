@@ -52,21 +52,21 @@ class SparseTreeTest {
                 1 to "1".bytes()),
                 depth = 4)
 
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(0).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(0),
                 merkleTree.root, ByteArray(32), 0))
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(1).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(1),
                 merkleTree.root, "1".bytes(), 1))
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(2).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(2),
                 merkleTree.root, "2".bytes(), 2))
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(3).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(3),
                 merkleTree.root, ByteArray(32), 3))
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(4).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(4),
                 merkleTree.root, "4".bytes(), 4))
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(5).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(5),
                 merkleTree.root, "5".bytes(), 5))
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(6).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(6),
                 merkleTree.root, ByteArray(32), 6))
-        assert(merkleTree.verifyProof(merkleTree.createMerkleProof(7).toList(),
+        assert(merkleTree.verifyProof(merkleTree.proofForIndex(7),
                 merkleTree.root, ByteArray(32), 7))
     }
 }
