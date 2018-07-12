@@ -16,6 +16,21 @@ MerkleTree(input: List<ByteArray>, hash: (ByteArray) -> ByteArray)
 
 MerkleTree.verifyProof(proof: List<ByteArray>, root: ByteArray, leaf: ByteArray, hash: (ByteArray) -> ByteArray): Boolean
 ```
+```kotlin
+SparseMerkleTree(input: Map<Int, ByteArray>, val depth: Int, hash: (ByteArray) -> ByteArray)
+  root(): ByteArray
+  hexRoot(): ByteArray
+  containsLeaf(el: ByteArray): Boolean
+  containsElement(el: ByteArray): Boolean
+  proofForLeaf(el: ByteArray): List<ByteArray>
+  hexProofForLeaf(el: ByteArray): List<ByteArray>
+  proofForElement(el: ByteArray): List<ByteArray>
+  hexProofForElement(el: ByteArray): List<ByteArray>MerkleTree
+  proofForIndex(idx: Int): List<ByteArray>
+  hexProofForIndex(idx: Int): List<ByteArray>MerkleTree
+
+MerkleTree.verifyProof(proof: List<ByteArray>, root: ByteArray, leaf: ByteArray, idx: Int): Boolean
+```
 
 SHA-256 implementation is provided.
 ```kotlin
