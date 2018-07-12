@@ -12,7 +12,8 @@ buildscript {
 group 'com.avoloshko'
 version '1.0-SNAPSHOT'
 
-def common = project.hasProperty("common") && project.findProperty("common").toString().toLowerCase().equals("true")
+def common = false
+//def common = project.hasProperty("common") && project.findProperty("common").toString().toLowerCase().equals("true")
 
 if (common) {
     apply plugin: 'kotlin-platform-common'

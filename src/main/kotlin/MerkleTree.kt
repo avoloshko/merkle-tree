@@ -1,9 +1,9 @@
 import kotlin.math.floor
 
 class MerkleTree(vararg input: ByteArray,
-                 val hash: (ByteArray) -> ByteArray = { data -> SHA256Digest.instance.digest(data) }) {
+                 val hash: (ByteArray) -> ByteArray = { data -> SHA256Digest.digest(data) }) {
 
-    private val elements = input.map { hash(it) }.sortedWith(byteArrayComparator)
+    private val elements = input.map { hash(it) }.toSortedSet(byteArrayComparator).toList()
     private val layers = layers(elements.toList())
 
     fun root(): ByteArray {
@@ -17,6 +17,14 @@ class MerkleTree(vararg input: ByteArray,
     fun containsLeaf(el: ByteArray): Boolean = elements.binarySearch(el, byteArrayComparator) >= 0
 
     fun containsElement(el: ByteArray): Boolean = containsLeaf(hash(el))
+
+    fun elementIndex(el: ByteArray): Int {
+        var idx = elements.binarySearch(el, byteArrayComparator)
+        if (idx < 0) {
+            throw IllegalArgumentException("Element ${bytesToString(bytesToHex(el))} does not exist in Merkle tree")
+        }
+        return idx;
+    }
 
     fun proofForLeaf(el: ByteArray): List<ByteArray> {
         var idx = elements.binarySearch(el, byteArrayComparator)
@@ -90,15 +98,6 @@ class MerkleTree(vararg input: ByteArray,
     }
 
     companion object {
-        private fun combinedHash(d1: ByteArray, d2: ByteArray?, hash: (ByteArray) -> ByteArray): ByteArray {
-            if (d2 == null) {
-                return d1
-            }
-
-            val list = listOf(d1, d2).sortedWith(byteArrayComparator)
-            return hash(list.first().plus(list.last()))
-        }
-
         fun verifyProof(proof: List<ByteArray>, root: ByteArray, leaf: ByteArray, hash: (ByteArray) -> ByteArray): Boolean {
             var computedHash = leaf
             for (proofElement in proof) {
@@ -110,6 +109,30 @@ class MerkleTree(vararg input: ByteArray,
             }
 
             return byteArrayComparator.compare(computedHash, root) == 0
+        }
+
+        fun verifyProof(proof: List<ByteArray>, root: ByteArray, leaf: ByteArray, idx: Int, hash: (ByteArray) -> ByteArray): Boolean {
+            var computedHash = leaf
+            var i = idx;
+            for (proofElement in proof) {
+                if (i % 2 == 0) {
+                    computedHash = combinedHash(computedHash, proofElement, hash)
+                } else {
+                    computedHash = combinedHash(proofElement, computedHash, hash)
+                }
+                i /= 2;
+            }
+
+            return byteArrayComparator.compare(computedHash, root) == 0
+        }
+
+        private fun combinedHash(d1: ByteArray, d2: ByteArray?, hash: (ByteArray) -> ByteArray): ByteArray {
+            if (d2 == null) {
+                return d1
+            }
+
+            val list = listOf(d1, d2).sortedWith(byteArrayComparator)
+            return hash(list.first().plus(list.last()))
         }
 
         private val byteArrayComparator = Comparator<ByteArray> { a, b ->

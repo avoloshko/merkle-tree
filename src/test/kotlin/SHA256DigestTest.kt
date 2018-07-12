@@ -1,7 +1,7 @@
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class SHA256DigestTest() {
+class SHA256DigestTest {
     @Test
     fun test1() {
         assertEquals("59141a5181f305b329bfeaaf88a9af423db1792a3686c023c75284212054b69c", "This is a dictionary".sha256())

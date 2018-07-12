@@ -42,3 +42,23 @@ fun hexToBytes(bytes: ByteArray): ByteArray {
     }
     return out
 }
+
+fun getReverseHex(data: ByteArray): String {
+    return bytesToString(bytesToHex(data.reverse()))
+}
+
+fun ByteArray.reverse(): ByteArray {
+    var i = 0
+    var j = size - 1
+    var tmp: Byte
+
+    while (j > i) {
+        tmp = this[j]
+        this[j] = this[i]
+        this[i] = tmp
+        j--
+        i++
+    }
+
+    return this
+}

@@ -3,12 +3,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class MerkleTreeTest() {
-    val merkle = MerkleTree("elem1".bytes(), "elem2".bytes(), "elem3".bytes())
+class MerkleTreeTest {
+    val merkle = MerkleTree("elem1".bytes(), "elem2".bytes(), "elem3".bytes(), "elem4".bytes(), "elem5".bytes(), "elem2".bytes())
 
     @Test
     fun testRoot() {
-        assertEquals("12daa1fdc1e4a2084d86a71fa55e614697902a0f9293263d28059a2662281dca", bytesToString(merkle.hexRoot()))
+        assertEquals("6982312644b56754fb401dea40745f70ab4690339374830aa6b49ccadc3dd0a4", bytesToString(merkle.hexRoot()))
     }
 
     @Test
@@ -16,7 +16,9 @@ class MerkleTreeTest() {
         assertTrue(merkle.containsElement("elem1".bytes()))
         assertTrue(merkle.containsElement("elem2".bytes()))
         assertTrue(merkle.containsElement("elem3".bytes()))
-        assertFalse(merkle.containsElement("elem4".bytes()))
+        assertTrue(merkle.containsElement("elem4".bytes()))
+        assertTrue(merkle.containsElement("elem5".bytes()))
+        assertFalse(merkle.containsElement("elem6".bytes()))
     }
 
     @Test
@@ -25,10 +27,10 @@ class MerkleTreeTest() {
         assertEquals(1, proof1.size)
 
         val proof2 = merkle.proofForElement("elem2".bytes())
-        assertEquals(2, proof2.size)
+        assertEquals(3, proof2.size)
 
         val proof3 = merkle.proofForElement("elem3".bytes())
-        assertEquals(2, proof3.size)
+        assertEquals(3, proof3.size)
     }
 
     @Test
@@ -49,9 +51,9 @@ class MerkleTreeTest() {
     @Test
     fun testVerifyProofWithWrongElem() {
         try {
-            merkle.proofForElement("elem4".bytes())
+            merkle.proofForElement("elem6".bytes())
         } catch (ex: IllegalArgumentException) {
-            assertTrue(false)
+            assertTrue(true)
             return
         }
         assertTrue(false)

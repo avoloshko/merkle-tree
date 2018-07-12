@@ -1,7 +1,7 @@
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class HexTest() {
+class HexTest {
     @Test
     fun test1() {
         assertEquals("5468697320697320612064696374696f6e617279", "This is a dictionary".hex())
